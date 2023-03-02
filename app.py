@@ -4,8 +4,25 @@ import plotly.express as px
 from dash import Dash, html, dcc, dash_table, Input, Output
 
 # Read sqlite query results into a pandas DataFrame
-con = sqlite3.connect("nbadatabase.sqlite")
-rebounds_df = pd.read_sql_query("SELECT player, season, team, player_type, trb_per_game FROM player_stats_rebounds", con)
+# Note: connection string changes in live app to use a full path
+con = sqlite3.connect("nbadatabase.sqlite") 
+cursor = con.cursor()
+view_query = """
+DROP VIEW IF EXISTS player_stats_rebounds;
+
+CREATE VIEW player_stats_rebounds AS
+SELECT player, season, tm as team, trb_per_game, fga_per_game, fg_percent, x3pa_per_game, x3p_percent, pts_per_game,
+    CASE
+        WHEN pos LIKE '%G%' THEN 'Guard'
+        WHEN pos LIKE '%F%' OR pos LIKE '%C%' THEN 'Big'
+        ELSE 'Error'
+        END  player_type
+FROM player_per_game_stats
+WHERE NOT trb_per_game = 'NA'
+"""
+cursor.executescript(view_query)
+con.commit()
+rebounds_df = pd.read_sql_query('SELECT player, season, team, player_type, trb_per_game FROM player_stats_rebounds', con)
 rebounds_df['season'] = pd.to_numeric(rebounds_df['season'])
 rebounds_df['trb_per_game'] = pd.to_numeric(rebounds_df['trb_per_game'])
 con.close()
