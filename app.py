@@ -96,18 +96,18 @@ def get_rebounds_bar(season, player_type):
 
 app = Dash(__name__)
 
-app.layout = html.Div(style={'backgroundColor': colors['nba_blue']},
+app.layout = html.Div(style={'backgroundColor': colors['white']},
                       children=[
                                 html.H1(children='NBA Rebounding Dashboard',
                                         style={
                                             'textAlign': 'center',
-                                            'color': colors['white']
+                                            'color': colors['nba_blue']
                                         }),
                                 
                                 # Outer Division for dropdowns
                                 html.Div([
                                         #Dropdown helper 1: Year
-                                        html.Div([html.H3('Season:', style={'margin-right': '1em', 'color': colors['white']})]),
+                                        html.Div([html.H3('Season:', style={'margin-right': '1em', 'color': colors['nba_blue']})]),
                                         #Dropdown 1: Year
                                         dcc.Dropdown(id='input-season',
                                              options=[{'label': i, 'value': i} for i in seasons],
@@ -115,7 +115,7 @@ app.layout = html.Div(style={'backgroundColor': colors['nba_blue']},
                                              style={'width':'40%', 'padding':'1px', 'font-size': '15px', 'text-align': 'center'}
                                              ),
                                         #Dropdown helper 2: Player Type
-                                        html.Div([html.H3('Player Type:', style={'margin-right': '1em', 'color': colors['white']})]),
+                                        html.Div([html.H3('Player Type:', style={'margin-right': '1em', 'color': colors['nba_blue']})]),
                                         #Dropdown 2: Player Type
                                         dcc.Dropdown(id='input-ptype',
                                              options=[{'label': 'Big', 'value': 'Big'},
@@ -129,7 +129,7 @@ app.layout = html.Div(style={'backgroundColor': colors['nba_blue']},
                                 html.Div([
                                         html.Div(
                                                 html.Table([
-                                                            html.Tr('Top 10 Rebounders', style={'font-size': '2.0rem', 'textAlign': 'center', 'color': colors['white']}),
+                                                            html.Tr('Top 10 Rebounders', style={'font-size': '2.0rem', 'textAlign': 'center', 'color': colors['nba_red']}),
                                                             html.Tr(id='top10-table')])
                                                 , style={'margin': '5px'}),
                                         
